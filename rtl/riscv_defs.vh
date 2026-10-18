@@ -33,4 +33,9 @@
 `define WB_MEM    2'd1
 `define WB_PC4    2'd2
 
+// Forwarding select (operand source in EX)
+`define FWD_NONE  2'd0    // value read from the register file in ID
+`define FWD_EXMEM 2'd1    // from the EX/MEM register (younger instruction)
+`define FWD_MEMWB 2'd2    // from the write-back value (older instruction)
+
 `endif

@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Compile and run every unit testbench with Icarus Verilog.
-# Also runs a (non-fatal) Verilator lint pass over the RTL.
-# Format of each entry:  testname:rtl_file1 rtl_file2 ...
+# Also runs a (non-fatal) Verilator lint pass over the whole core.
+# Entry format:  testname:rtl_module1 rtl_module2 ...   (testbench = tb/tb_<testname>.v)
 cd "$(dirname "$0")/.." || exit 1
 mkdir -p build
 overall=0
+
+ALL_RTL="alu regfile imm_gen control_unit pc_reg branch_unit load_store_unit if_id_reg id_ex_reg ex_mem_reg mem_wb_reg forwarding_unit hazard_unit riscv_core"
 
 TESTS=(
   "alu:alu"
@@ -15,16 +17,16 @@ TESTS=(
   "pc_reg:pc_reg"
   "load_store_unit:load_store_unit"
   "pipe_regs:if_id_reg id_ex_reg ex_mem_reg mem_wb_reg"
+  "forwarding_unit:forwarding_unit"
+  "hazard_unit:hazard_unit"
+  "core_smoke:$ALL_RTL"
 )
 
-echo "--- Verilator lint (warnings are informational) ---"
-for t in "${TESTS[@]}"; do
-    files="${t#*:}"
-    for f in $files; do
-        verilator --lint-only -Wall -Wno-fatal -Irtl --top-module "$f" "rtl/$f.v" 2>&1 \
-            | grep -E '^%(Warning|Error)' | head -n 10
-    done
-done
+echo "--- Verilator lint of riscv_core (warnings are informational) ---"
+lint_srcs=""
+for f in $ALL_RTL; do lint_srcs="$lint_srcs rtl/$f.v"; done
+verilator --lint-only -Wall -Wno-fatal -Irtl --top-module riscv_core $lint_srcs 2>&1 \
+    | grep -E '^%(Warning|Error)' | head -n 40
 
 echo
 echo "--- Unit tests (Icarus Verilog) ---"
