@@ -1,1 +1,3 @@
 build/
+synthesis/riscv_core_netlist.v
+synthesis/lib/*.lib
