@@ -13,6 +13,7 @@ SRCS=$(ls rtl/*.v | tr "\n" " ")
 yosys -l $R/lib_synth.log -p "
 read_liberty -overwrite -setattr liberty_cell -lib $LIB
 read_verilog -I rtl $SRCS
+chparam -set TRACE ${TRACE:-1} riscv_core
 hierarchy -check -top riscv_core
 synth -top riscv_core -flatten
 dfflibmap -liberty $LIB

@@ -9,7 +9,7 @@ python3 scripts/assemble.py --selftest || exit 1
 
 echo
 echo "--- Compile core + scoreboard testbench ---"
-if ! iverilog -g2005 -Irtl -Itb -o build/tb_core.vvp rtl/*.v tb/tb_core.v 2> build/tb_core.compile.log; then
+if ! iverilog -g2005 $IVFLAGS -Irtl -Itb -o build/tb_core.vvp rtl/*.v tb/tb_core.v 2> build/tb_core.compile.log; then
     echo "COMPILE ERROR (see build/tb_core.compile.log)"
     exit 1
 fi

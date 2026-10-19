@@ -10,6 +10,7 @@
 module tb_core;
     localparam [31:0] RESET_VECTOR = 32'h00000000;
     localparam integer MAX_CYCLES  = 50000;
+    parameter TRACE = 1;   // 0: DUT has no pc/instr trace, skip those two comparisons
 
     reg         clk, rst;
     wire [31:0] imem_addr, imem_rdata, dmem_addr, dmem_wdata, dmem_rdata;
@@ -30,7 +31,7 @@ module tb_core;
 
     `include "rv32i_model.vh"
 
-    riscv_core #(.RESET_VECTOR(RESET_VECTOR)) dut (
+    riscv_core #(.RESET_VECTOR(RESET_VECTOR), .TRACE(TRACE)) dut (
         .clk(clk), .rst(rst),
         .imem_addr(imem_addr), .imem_rdata(imem_rdata),
         .dmem_addr(dmem_addr), .dmem_wdata(dmem_wdata), .dmem_wstrb(dmem_wstrb),
@@ -134,8 +135,8 @@ module tb_core;
                                  retire_we, retire_rd, retire_data);
 
                     mism = 1'b0;
-                    if (retire_pc    !== m_x_pc)    mism = 1'b1;
-                    else if (retire_instr !== m_x_instr) mism = 1'b1;
+                    if (TRACE != 0 && retire_pc !== m_x_pc)    mism = 1'b1;
+                    else if (TRACE != 0 && retire_instr !== m_x_instr) mism = 1'b1;
                     else if (retire_we    !== m_x_we)    mism = 1'b1;
                     else if (m_x_we && (retire_rd !== m_x_rd || retire_data !== m_x_data))
                         mism = 1'b1;

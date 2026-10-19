@@ -14,7 +14,9 @@
 `include "riscv_defs.vh"
 
 module riscv_core #(
-    parameter [31:0] RESET_VECTOR = 32'h00000000
+    parameter [31:0] RESET_VECTOR = 32'h00000000,
+    // TRACE=0 removes the trace-only pc/instr fields (retire_pc/retire_instr become constants)
+    parameter TRACE = 1
 ) (
     input  wire        clk,
     input  wire        rst,
@@ -163,7 +165,7 @@ module riscv_core #(
 
     id_ex_reg #(.XLEN(XLEN)) u_id_ex (
         .clk(clk), .rst(rst), .flush(idex_flush),
-        .valid_d(ifid_valid), .pc_d(ifid_pc), .instr_d(ifid_instr),
+        .valid_d(ifid_valid), .pc_d(ifid_pc), .instr_d(TRACE ? ifid_instr : 32'h00000013),
         .rs1_data_d(id_rs1_data), .rs2_data_d(id_rs2_data), .imm_d(id_imm),
         .rs1_addr_d(id_rs1), .rs2_addr_d(id_rs2), .rd_addr_d(id_rd),
         .funct3_d(ifid_instr[14:12]),
@@ -215,7 +217,7 @@ module riscv_core #(
 
     ex_mem_reg #(.XLEN(XLEN)) u_ex_mem (
         .clk(clk), .rst(rst),
-        .valid_d(idex_valid), .pc_d(idex_pc), .instr_d(idex_instr),
+        .valid_d(idex_valid), .pc_d(TRACE ? idex_pc : 32'd0), .instr_d(TRACE ? idex_instr : 32'h00000013),
         .pc_plus4_d(ex_pc_plus4), .alu_result_d(ex_alu_result),
         .store_data_d(ex_rs2_val), .rd_addr_d(idex_rd), .funct3_d(idex_funct3),
         .reg_write_d(idex_reg_write), .mem_read_d(idex_mem_read),
@@ -241,7 +243,7 @@ module riscv_core #(
 
     mem_wb_reg #(.XLEN(XLEN)) u_mem_wb (
         .clk(clk), .rst(rst),
-        .valid_d(exmem_valid), .pc_d(exmem_pc), .instr_d(exmem_instr),
+        .valid_d(exmem_valid), .pc_d(TRACE ? exmem_pc : 32'd0), .instr_d(TRACE ? exmem_instr : 32'h00000013),
         .pc_plus4_d(exmem_pc_plus4), .alu_result_d(exmem_alu_result),
         .load_data_d(mem_load_data), .rd_addr_d(exmem_rd),
         .reg_write_d(exmem_reg_write), .wb_sel_d(exmem_wb_sel),

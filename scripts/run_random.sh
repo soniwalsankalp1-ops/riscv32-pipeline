@@ -8,7 +8,7 @@ first=${2:-1}
 len=${3:-150}
 mkdir -p build/random
 
-if ! iverilog -g2005 -Irtl -Itb -o build/tb_core.vvp rtl/*.v tb/tb_core.v 2> build/tb_core.compile.log; then
+if ! iverilog -g2005 $IVFLAGS -Irtl -Itb -o build/tb_core.vvp rtl/*.v tb/tb_core.v 2> build/tb_core.compile.log; then
     echo "COMPILE ERROR (see build/tb_core.compile.log)"
     exit 1
 fi
