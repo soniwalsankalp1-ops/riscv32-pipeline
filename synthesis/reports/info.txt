@@ -1,0 +1,3 @@
+tool   : Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)
+commit : 14c20d3 (uncommitted changes may exist)
+flow   : generic synth, no liberty file, no timing constraints
