@@ -1,0 +1,64 @@
+Warning: synthesis/lib/sky130_fd_sc_hd__tt_025C_1v80.lib, line 31 default_operating_condition tt_025C_1v80 not found.
+=== Clock period: 10 ns ===
+Startpoint: _12778_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _13210_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+   Delay     Time   Description
+-----------------------------------------------------------
+   0.000    0.000   clock clk (rise edge)
+   0.000    0.000   clock network delay (ideal)
+   0.000    0.000 ^ _12778_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   3.542    3.542 ^ _12778_/Q (sky130_fd_sc_hd__dfxtp_1)
+   7.208   10.750 ^ _06913_/X (sky130_fd_sc_hd__and2_0)
+   3.667   14.417 v _08924_/Y (sky130_fd_sc_hd__o41ai_1)
+   0.722   15.139 ^ _09059_/Y (sky130_fd_sc_hd__a211oi_1)
+   0.003   15.142 ^ _13210_/D (sky130_fd_sc_hd__dfxtp_1)
+           15.142   data arrival time
+
+  10.000   10.000   clock clk (rise edge)
+   0.000   10.000   clock network delay (ideal)
+   0.000   10.000   clock reconvergence pessimism
+           10.000 ^ _13210_/CLK (sky130_fd_sc_hd__dfxtp_1)
+  -0.150    9.850   library setup time
+            9.850   data required time
+-----------------------------------------------------------
+            9.850   data required time
+          -15.142   data arrival time
+-----------------------------------------------------------
+           -5.292   slack (VIOLATED)
+
+
+=== Worst slack ===
+Error: sta.tcl, 18 report_worst_slack -max is not a known keyword or flag.
+Error: sta.tcl, 19 report_worst_slack -min is not a known keyword or flag.
+=== Hold check ===
+Startpoint: _14036_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _14230_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+   Delay     Time   Description
+-----------------------------------------------------------
+   0.000    0.000   clock clk (rise edge)
+   0.000    0.000   clock network delay (ideal)
+   0.000    0.000 ^ _14036_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.276    0.276 ^ _14036_/Q (sky130_fd_sc_hd__dfxtp_1)
+   0.083    0.359 ^ _12599_/X (sky130_fd_sc_hd__lpflow_inputiso1p_1)
+   0.003    0.363 ^ _14230_/D (sky130_fd_sc_hd__dfxtp_1)
+            0.363   data arrival time
+
+   0.000    0.000   clock clk (rise edge)
+   0.000    0.000   clock network delay (ideal)
+   0.000    0.000   clock reconvergence pessimism
+            0.000 ^ _14230_/CLK (sky130_fd_sc_hd__dfxtp_1)
+  -0.035   -0.035   library hold time
+           -0.035   data required time
+-----------------------------------------------------------
+           -0.035   data required time
+           -0.363   data arrival time
+-----------------------------------------------------------
+            0.398   slack (MET)
+
+
