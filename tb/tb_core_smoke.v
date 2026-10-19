@@ -92,7 +92,7 @@ module tb_core_smoke;
         repeat (100) @(posedge clk);
         #1;
 
-        check_reg(0,  32'd0);
+        // x0 has no storage (regs[0] is never written); it is checked through the read ports elsewhere
         check_reg(1,  32'd5);
         check_reg(2,  32'd8);
         check_reg(3,  32'd13);

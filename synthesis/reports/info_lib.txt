@@ -1,4 +1,4 @@
 tool    : Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)
 library : sky130_fd_sc_hd__tt_025C_1v80.lib  (typical corner)
-abc -D  : 12000 ps (synthesis target only, not a timing result)
-commit  : d2b2745
+abc -D  : 10000 ps (synthesis target only, not a timing result)
+commit  : 4c06017

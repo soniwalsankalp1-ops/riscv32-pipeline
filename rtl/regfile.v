@@ -27,7 +27,7 @@ module regfile #(
     // Sequential logic
     always @(posedge clk) begin
         if (rst) begin
-            for (i = 0; i < 32; i = i + 1)
+            for (i = 1; i < 32; i = i + 1)   // x0 has no storage: reads are forced to 0 below
                 regs[i] <= {XLEN{1'b0}};
         end else if (wr_en) begin
             regs[waddr] <= wdata;
