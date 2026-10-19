@@ -9,7 +9,7 @@ ABC runs with synthesis/abc.constr (driving cell and load) so high-fanout nets g
 
 Reproduce:
 
-    wget -O synthesis/lib/sky130_fd_sc_hd__tt_025C_1v80.lib <sky130_fd_sc_hd tt_025C_1v80 liberty URL>
+    wget -O synthesis/lib/sky130_fd_sc_hd__tt_025C_1v80.lib https://raw.githubusercontent.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/master/timing/sky130_fd_sc_hd__tt_025C_1v80.lib
     ./scripts/run_synth_lib.sh 10000
     PERIOD_NS=10 sta -no_splash -exit scripts/sta.tcl
 
